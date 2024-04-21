@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <h1>To-Do List</h1>
+    <ul>
+    {% for task in tasks %}
+        <li>
+            {{ task.description }} - {{ task.status }} - {{ task.due_date }}
+            <form action="{% url 'delete_task' task.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+<a href="{% url 'add_task' %}" class="btn btn-primary">Add Task</a>
+{% endblock %}
+
+</body>
+</html>
